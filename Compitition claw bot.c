@@ -1,5 +1,7 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
 #pragma config(Sensor, dgtl1,  ,               sensorQuadEncoder)
+#pragma config(Sensor, dgtl11, Post,           sensorDigitalIn)
+#pragma config(Sensor, dgtl12, Blue,           sensorDigitalIn)
 #pragma config(Sensor, I2C_1,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_2,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_3,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
@@ -73,7 +75,9 @@ void raise (float inches, int speed, bool hold)
 	resetMotorEncoder(liftMotor);
 
 	setMotorTarget(liftMotor, (long)(inches * ticksPerInchRaised), speed, hold);
-
+}
+void raiseWait (void)
+{
 	while (!getMotorTargetCompleted(liftMotor))
 		wait1Msec(10);
 }
@@ -110,10 +114,24 @@ task autonomous()
 	motor[servoLock] = 127;
 
 	raise(
-	15, 127, false);
+	12, 127, false);
 
 	move(
-	42.5, 70, false);
+	24, 100, false);
+
+	raiseWait();
+
+	move(
+	18, 80, false);
+
+	spin(
+	-20, 70, false);
+
+	move(
+	-25, 100, false);
+
+	spin(
+	80, 70, false);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -132,6 +150,7 @@ task usercontrol()
 	//PID fixup
 	nMotorPIDSpeedCtrl[rightMotor] = RegIdle;
 	nMotorPIDSpeedCtrl[leftMotor] = RegIdle;
+	motor[servoLock] = 127;
 
 	// User control code here, inside the loop
 
@@ -145,13 +164,12 @@ task usercontrol()
 		if (vexRT[Btn6U] == 1)
 		{
 			motor[liftMotor] = 127;
-			motor[spoolerMotor] = 20;
+			motor[spoolerMotor] = -20;
 		}
 		else if (vexRT[Btn6D] == 1)
 		{
-			motor[liftMotor] = -127
-			;
-			motor[spoolerMotor] = -20;
+			motor[liftMotor] = -127;
+			motor[spoolerMotor] = 20;
 		}
 		else
 		{
