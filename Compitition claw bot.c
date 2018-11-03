@@ -1,6 +1,6 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
 #pragma config(Sensor, dgtl1,  ,               sensorQuadEncoder)
-#pragma config(Sensor, dgtl11, Post,           sensorDigitalIn)
+#pragma config(Sensor, dgtl11, Flag,           sensorDigitalIn)
 #pragma config(Sensor, dgtl12, Red,            sensorDigitalIn)
 #pragma config(Sensor, I2C_1,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_2,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
@@ -110,7 +110,7 @@ void pre_auton()
 
 task autonomous()
 {
-	if((SensorValue[Red] == 0) && (SensorValue[Post] == 0))
+	if((SensorValue[Red] == 0) && (SensorValue[Flag] == 0))
 	{
 		motor[servoLock] = 10;
 
@@ -130,7 +130,7 @@ task autonomous()
 
 		spin(80, 70, false);
 	}
-	else if((SensorValue[Red] == 1) && (SensorValue[Post] == 0))
+	else if((SensorValue[Red] == 1) && (SensorValue[Flag] == 0))
 	{
 		motor[servoLock] = 10;
 
@@ -151,11 +151,15 @@ task autonomous()
 		spin(-80, 70, false);
 	}
 
-	else if((SensorValue[Red]) == 1 && (SensorValue[Post] == 1))
+	else if((SensorValue[Red]) == 1 && (SensorValue[Flag] == 1))
 	{
 		motor[servoLock] = 10;
 
-		move(50, 127, false);
+		move(40, 127, false);
+
+		spin(15, 70, false);
+
+		move(10, 80, false);
 
 		raise(5, 127, false);
 
