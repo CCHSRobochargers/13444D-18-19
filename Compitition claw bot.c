@@ -1,7 +1,7 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
 #pragma config(Sensor, dgtl1,  ,               sensorQuadEncoder)
 #pragma config(Sensor, dgtl11, Post,           sensorDigitalIn)
-#pragma config(Sensor, dgtl12, Blue,           sensorDigitalIn)
+#pragma config(Sensor, dgtl12, Red,            sensorDigitalIn)
 #pragma config(Sensor, I2C_1,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_2,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_3,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
@@ -110,30 +110,67 @@ void pre_auton()
 
 task autonomous()
 {
+	if((SensorValue[Red] == 0) && (SensorValue[Post] == 0))
+	{
+		motor[servoLock] = 10;
 
-	motor[servoLock] = 127;
+		raise(12, 127, false);
 
-	raise(
-	12, 127, false);
+		move(24, 100, false);
 
-	move(
-	24, 100, false);
+		raiseWait();
 
-	raiseWait();
+		move(18, 80, false);
 
-	move(
-	18, 80, false);
+		spin(15, 70, false);
 
-	spin(
-	-20, 70, false);
+		spin(-15, 70,false);
 
-	move(
-	-25, 100, false);
+		move(-25, 100, false);
 
-	spin(
-	80, 70, false);
+		spin(80, 70, false);
+	}
+	else if((SensorValue[Red] == 1) && (SensorValue[Post] == 0))
+	{
+		motor[servoLock] = 10;
+
+		raise(12, 127, false);
+
+		move(24, 100, false);
+
+		raiseWait();
+
+		move(15, 80, false);
+
+		spin(-30, 70, false);
+
+		spin(30, 70, false);
+
+		move(-25, 100, false);
+
+		spin(-80, 70, false);
+	}
+
+	else if((SensorValue[Red]) == 1 && (SensorValue[Post] == 1))
+	{
+		motor[servoLock] = 10;
+
+		move(50, 127, false);
+
+		raise(5, 127, false);
+
+		raiseWait();
+
+		move(-5, 70, false);
+
+		raise(-5, 100, false);
+
+		raiseWait();
+
+		move(-5, 127, false);
+
+	}
 }
-
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
 /*                              User Control Task                            */
@@ -150,7 +187,7 @@ task usercontrol()
 	//PID fixup
 	nMotorPIDSpeedCtrl[rightMotor] = RegIdle;
 	nMotorPIDSpeedCtrl[leftMotor] = RegIdle;
-	motor[servoLock] = 127;
+	motor[servoLock] = 10;
 
 	// User control code here, inside the loop
 
