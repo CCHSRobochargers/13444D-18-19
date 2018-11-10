@@ -156,7 +156,7 @@ task autonomous()
 		spin(-80, 70, false);// spins to face towards the cap
 	}
 
-	else if((SensorValue[Red]) == 1 && (SensorValue[Flag] == 1))// used to score two blue low caps
+	else if((SensorValue[Red] == 1) && (SensorValue[Flag] == 1))// used to score two blue low caps
 	{
 
 		motor[servoLock] = 10;// drops the claw
@@ -203,7 +203,7 @@ task autonomous()
 		//move(-5, 127, false);
 
 	}
-	else if((SensorValue[Red]) == 0 && (SensorValue[Flag] == 1))// used to score two red low caps
+	else if((SensorValue[Red] == 0) && (SensorValue[Flag] == 1))// used to score two red low caps
 	{
 		motor[servoLock] = 10;// drops the claw
 
