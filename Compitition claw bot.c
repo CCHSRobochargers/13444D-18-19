@@ -222,55 +222,58 @@ task autonomous()
 {
 	switch (count) {
 
-	case 0:// used to score the red bottom flag
+	case 0://This program is used to score the red bottom flag
 
-		motor[servoLock] = 127;// drops the servo
+		motor[servoLock] = 127;//This drops the servo keeping the "claw" up at the beginning.
 
-		raise(12, 127, false);// raises the lift to hit the cap
+		raise(12, 127, false);//This raises the lift to a sufficient height to hit the flag.
 
-		move(24, 100, false);// moves forward as the lift is raising
+		move(24, 100, false);//The robot moves forward as the lift is raising, which saves time.
 
-		spin(10, 100, false);// lines up with flag
+		spin(10, 100, false);//Then, approximately halfway to the flag,the robot turns to line up with the flag.
 
-		raiseWait();// waits for the lift to finish raising
+		raiseWait();//The robot waits for the lift to finish raising before continuing.
 
-		move(18, 80, false);// moves forward to hit the flag
+		move(18, 80, false);//With the lift now high enough, the robot again moves forward to hit the flag.
 
-		spin(15, 70, false);// spins to make sure the flag is scored
+		spin(15, 70, false);/*Here the robot spins to make sure the flag is scored, as the claw will push the flag sideways if it is not
+		scored yet*/
 
-		spin(-15, 70,false);//spins to straight backward
+		spin(-15, 70,false);//The robot spins to back up straight.
 
-		move(-25, 100, false);// backs up from the flag
+		move(-25, 100, false);//And it backs up from the flag.
 
-		spin(80, 70, false);// spins to face towards the cap
+		spin(80, 70, false);/*Last, it spins to face towards the cap so that we can be as efficient as possible with the time allowed; by
+		turning now we do not need to use driver control time preparing for our next move, as we will be prepared already.*/
 		break;
 
-	case 1: // used to score the bottom blue flag
+	case 1: //This is used to score the bottom blue flag, and is parallel to the previous program.
 
-		motor[servoLock] = 127;// drops the servo
+		motor[servoLock] = 127;//The servo allows the claw to drop.
 
-		raise(12, 127, false);// raises the lift to 12 inches to hit the flag
+		raise(12, 127, false);//The lift raises to 12 inches to reach the flag.
 
-		move(24, 100, false);// moves forward as the lift is raising
+		move(24, 100, false);//The robot moves forward as the lift is raising, maximizing efficiency.
 
-		raiseWait();// waits for the lift to finish raising
+		raiseWait();//Now the robot waits for the lift to finish raising.
 
-		move(15, 80, false);// moves forward to hit the flag
+		move(15, 80, false);//It moves forward the remaining distance to hit the flag.
 
-		spin(-30, 70, false);// spins to make sure the flag is scored
+		spin(-30, 70, false);//Again, it spins to make sure the flag is scored.
 
-		spin(30, 70, false);//spins to straight backward
+		spin(30, 70, false);//And spins to back up straight again.
 
-		move(-25, 100, false);// backs up from the flag
+		move(-25, 100, false);//It backs up from the flag.
 
-		spin(-80, 70, false);// spins to face towards the cap
+		spin(-80, 70, false);//And again spins to face towards the cap to make the code as time-efficient as possible.
 		break;
 
-	case 2: // used to score two blue low caps
+	case 2: //This code is used to score two blue low caps.
 
-		motor[servoLock] = 127;// drops the claw
+		motor[servoLock] = 127;//The claw drops immediately.
 
-		move(44, 127, false);// moves forward to the cap
+		move(44, 127, false);/*The bot moves forward to the first cap, which is the one propped on a ball. This motion also pushes the ball out
+		from under the cap, scoring it for our alliance*/
 
 		//raise(5, 127, false);
 		// not used at the moment
@@ -280,31 +283,37 @@ task autonomous()
 
 		//spin(50, 80, false);// spins back straight
 
-		move(-5, 100, false);// moves back from the cap
+		move(-5, 100, false);//The robot moves back from the cap.
 
-		spin(110, 100, false);//spins left towards the other cap
+		spin(110, 100, false);//And spins left towards the other cap.
 
-		move(-7, 127, false);//moves towards the other cap
+		move(-7, 127, false);//And moves towards the other cap.
 
 		motor[fliperMotor] = 70;
 		motor[rightMotor] = 15;
 		motor[leftMotor] = 15;
 		wait1Msec(400);
 
-		//I decided to use time as the requirement for the motor running because it will allow us to sync all movements while the act of
-		//flipping the cone is happening
+		//And flips it.
+		/*I decided to use time as the requirement for the motor running because it will allow us to sync all movements while the act of
+		flipping the cone is happening, and because there is no other function for moving the flipper due to the lack of encoders. The
+		activation of the drive motors will move the robot forward while flipping the cap, as otherwise the flipper may be too short to
+		maintain contact with the cap all the way to the point where the cap will fall to the desired color; i.e., while the cap is being
+		flipped the point at which the robot contacts the cap is pushed farther away horizontally from the main structure of the robot as
+		the cap reaches a vertical state where it will consequently fall to the other side from its original state. Thus to keep the
+		distance of the cap from the robot's body smaller than the distance of the arms maximum reach until the cap reaches its peak, the
+		robot must drive forwards as it moves. Apologies for the legthy and murky explanation.*/
 
 		motor[fliperMotor] = 0;
 		motor[rightMotor] = 0;
 		motor[leftMotor] = 0;
 
-		move(5, 100, false);//moves back from the cap
+		move(5, 100, false);//The robot last moves back from the cap.
 
 		motor[fliperMotor] = -50;
+		wait1Msec(20);//And lowers the arm.
 
-		wait1Msec(20);
-
-		motor[fliperMotor] = 0;
+		motor[fliperMotor] = 0;//And turns off power to the flipper motor at the approximate time that it reaches its original position.
 		//raise(-5, 100, false);
 		//not used at the moment
 		//raiseWait();
@@ -312,11 +321,12 @@ task autonomous()
 		//move(-5, 127, false);
 		break;
 
-	case 3:// used to score two red low caps
+	case 3:/*This progam is used to score two red low caps, and is essentially correspondent to the last program, but with the spins reversed
+		to adjust for the reversed orientation of the red side of the field compared to the blue side.*/
 
-		motor[servoLock] = 127;// drops the claw
+		motor[servoLock] = 127;//As before, the claw is dropped at the very beginning.
 
-		move(44, 127, false);// moves forward to the cap
+		move(44, 127, false);//The robot again moves forward to the cap and pushes the ball out from underneath it.
 
 		//raise(5, 127, false);
 		// not used at the moment
@@ -326,29 +336,30 @@ task autonomous()
 
 		//spin(50, 80, false);// spins back straight
 
-		move(-5, 100, false);// moves back from the cap
+		//Bob, why are you keeping useless code?
 
-		spin(-130, 100, false);//spins left towards the other cap
+		move(-5, 100, false);//The robot moves back from the cap for the turn.
 
-		move(-7, 127, false);//moves towards the other cap
+		spin(-130, 100, false);//It spins left towards the other cap.
+
+		move(-7, 127, false);//Now it moves towards the other cap.
 
 		motor[fliperMotor] = 70;
 		motor[rightMotor] = 15;
 		motor[leftMotor] = 15;
-		wait1Msec(300);
+		wait1Msec(400);
 
-		//I decided to use time as the requirement for the motor running because it will allow us to sync all movements while the act of
-		//flipping the cone is happening
+		//This is the parallel to flipping the cap in the last autonomous program.
 
 		motor[fliperMotor] = 0;
 		motor[rightMotor] = 0;
 		motor[leftMotor] = 0;
 
-		move(5, 100, false);//moves back from the cap
+		move(5, 100, false);//And it moves back from the flipped cap.
 
-		motor[fliperMotor] = -50;
+		motor[fliperMotor] = -50;//And lowers the arm to its original position.
 
-		wait1Msec(20);
+		wait1Msec(20);//Why does it take so long?
 
 		motor[fliperMotor] = 0;
 		//raise(-5, 100, false);
@@ -356,6 +367,8 @@ task autonomous()
 		//raiseWait();
 
 		//move(-5, 127, false);
+
+		//Seriously Bob, clean this code up or give me a good reason to keep it.
 		break;
 	}
 }
@@ -379,11 +392,12 @@ task usercontrol()
 	nMotorPIDSpeedCtrl[liftMotor] = RegIdle;
 	motor[servoLock] = 127;
 
-	// User control code here, inside the loop
+	//User control code is here, inside an infinite while loop.
 
 	while (true)
 	{
-		//Driving Motor Control
+		/*The following controls the "halfspeed" condition, which is ironically does not halve the speed but rather decreases it to a quarter of
+		the normal speed; either way, it puts the robot in slow motion to allow greater precision by the drivers.*/
 		if (vexRT[Btn8D] == 1)
 		{
 			halfspeed = true;
@@ -393,17 +407,19 @@ task usercontrol()
 			halfspeed = false;
 		}
 
-		if (halfspeed == true)
+		/*Here we have the actual motor controls themselves, which are assigned to the joysticks. This allows a large range of possible values,
+		and is consistent with conventional standards.*/
+		if (halfspeed == true)//The slow-motion driving controls.
 		{
 			motor[leftMotor] = vexRT[Ch3] / 4;
 			motor[rightMotor] = vexRT[Ch2] / 4;
 		}
-		else
+		else//The drive controls for the normal mode.
 		{
 			motor[leftMotor] = vexRT[Ch3];
 			motor[rightMotor] = vexRT[Ch2];
 		}
-		//Lift Motor Control
+		//Controls for the lift motor. These are assigned to the 6U and 6D buttons, which respectively raise and lower the lift.
 		if (vexRT[Btn6U] == 1)
 		{
 			motor[liftMotor] = 127;
@@ -417,7 +433,7 @@ task usercontrol()
 			motor[liftMotor] = 0;
 		}
 
-		// fliper control
+		//These are the controls for the flipper arm, assigned to buttons 5U and 5D to respectively raise and lower the arm.
 		if (vexRT[Btn5U]==1)
 		{
 			motor[fliperMotor] = 70;
@@ -448,3 +464,5 @@ task usercontrol()
 		UserControlCodePlaceholderForTesting();
 	}
 }
+
+//Yay we're done! :D
