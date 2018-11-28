@@ -124,7 +124,7 @@ void pre_auton()
 	// Example: clearing encoders, setting servo positions, ...
 
 	// Declare count variable to keep track of our choice
-	int count = 0;
+	bLCDBacklight = true;
 
 	// Clear LCD
 	clearLCDLine(0);
@@ -220,9 +220,15 @@ void pre_auton()
 
 task autonomous()
 {
+	// Clear LCD
+	clearLCDLine(0);
+	clearLCDLine(1);
 	switch (count) {
 
 	case 0://This program is used to score the red bottom flag
+
+		displayLCDCenteredString(0, "Red Flag");
+		displayLCDCenteredString(1, "Is Running");
 
 		motor[servoLock] = 127;//This drops the servo keeping the "claw" up at the beginning.
 
@@ -249,6 +255,9 @@ task autonomous()
 
 	case 1: //This is used to score the bottom blue flag, and is parallel to the previous program.
 
+	displayLCDCenteredString(0, "Blue Flag");
+	displayLCDCenteredString(1, "Running");
+
 		motor[servoLock] = 127;//The servo allows the claw to drop.
 
 		raise(12, 127, false);//The lift raises to 12 inches to reach the flag.
@@ -270,6 +279,8 @@ task autonomous()
 
 	case 2: //This code is used to score two blue low caps.
 
+	displayLCDCenteredString(0, "Blue Caps");
+	displayLCDCenteredString(1, "Running");
 		motor[servoLock] = 127;//The claw drops immediately.
 
 		move(44, 127, false);/*The bot moves forward to the first cap, which is the one propped on a ball. This motion also pushes the ball out
@@ -323,6 +334,9 @@ task autonomous()
 
 	case 3:/*This progam is used to score two red low caps, and is essentially correspondent to the last program, but with the spins reversed
 		to adjust for the reversed orientation of the red side of the field compared to the blue side.*/
+
+		displayLCDCenteredString(0, "Red Caps");
+		displayLCDCenteredString(1, "Running");
 
 		motor[servoLock] = 127;//As before, the claw is dropped at the very beginning.
 
