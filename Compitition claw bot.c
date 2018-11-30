@@ -255,8 +255,8 @@ task autonomous()
 
 	case 1: //This is used to score the bottom blue flag, and is parallel to the previous program.
 
-	displayLCDCenteredString(0, "Blue Flag");
-	displayLCDCenteredString(1, "Running");
+		displayLCDCenteredString(0, "Blue Flag");
+		displayLCDCenteredString(1, "Running");
 
 		motor[servoLock] = 127;//The servo allows the claw to drop.
 
@@ -279,110 +279,55 @@ task autonomous()
 
 	case 2: //This code is used to score two blue low caps.
 
-	displayLCDCenteredString(0, "Blue Caps");
-	displayLCDCenteredString(1, "Running");
-		motor[servoLock] = 127;//The claw drops immediately.
+		displayLCDCenteredString(0, "Blue Caps");
+		displayLCDCenteredString(1, "Running");
 
-		move(44, 127, false);/*The bot moves forward to the first cap, which is the one propped on a ball. This motion also pushes the ball out
-		from under the cap, scoring it for our alliance*/
 
-		//raise(5, 127, false);
-		// not used at the moment
-		//raiseWait();
-
-		//spin(-50, 80, false);// knocks the ball out from under the first cap
-
-		//spin(50, 80, false);// spins back straight
-
-		move(-5, 100, false);//The robot moves back from the cap.
-
-		spin(110, 100, false);//And spins left towards the other cap.
-
-		move(-7, 127, false);//And moves towards the other cap.
+		move(-45, 127, false);
 
 		motor[fliperMotor] = 70;
 		motor[rightMotor] = 15;
 		motor[leftMotor] = 15;
-		wait1Msec(400);
-
-		//And flips it.
-		/*I decided to use time as the requirement for the motor running because it will allow us to sync all movements while the act of
-		flipping the cone is happening, and because there is no other function for moving the flipper due to the lack of encoders. The
-		activation of the drive motors will move the robot forward while flipping the cap, as otherwise the flipper may be too short to
-		maintain contact with the cap all the way to the point where the cap will fall to the desired color; i.e., while the cap is being
-		flipped the point at which the robot contacts the cap is pushed farther away horizontally from the main structure of the robot as
-		the cap reaches a vertical state where it will consequently fall to the other side from its original state. Thus to keep the
-		distance of the cap from the robot's body smaller than the distance of the arms maximum reach until the cap reaches its peak, the
-		robot must drive forwards as it moves. Apologies for the legthy and murky explanation.*/
+		wait1Msec(500);
 
 		motor[fliperMotor] = 0;
 		motor[rightMotor] = 0;
 		motor[leftMotor] = 0;
 
-		move(5, 100, false);//The robot last moves back from the cap.
+		motor[servoLock] = 127;
 
-		motor[fliperMotor] = -50;
-		wait1Msec(20);//And lowers the arm.
+		spin(-100, 127, false);
 
-		motor[fliperMotor] = 0;//And turns off power to the flipper motor at the approximate time that it reaches its original position.
-		//raise(-5, 100, false);
-		//not used at the moment
-		//raiseWait();
+		move( 16, 127, false);
 
-		//move(-5, 127, false);
+		spin( 60, 127, false);
+
 		break;
 
-	case 3:/*This progam is used to score two red low caps, and is essentially correspondent to the last program, but with the spins reversed
-		to adjust for the reversed orientation of the red side of the field compared to the blue side.*/
+	case 3:
 
 		displayLCDCenteredString(0, "Red Caps");
 		displayLCDCenteredString(1, "Running");
 
-		motor[servoLock] = 127;//As before, the claw is dropped at the very beginning.
-
-		move(44, 127, false);//The robot again moves forward to the cap and pushes the ball out from underneath it.
-
-		//raise(5, 127, false);
-		// not used at the moment
-		//raiseWait();
-
-		//spin(-50, 80, false);// knocks the ball out from under the first cap
-
-		//spin(50, 80, false);// spins back straight
-
-		//Bob, why are you keeping useless code?
-
-		move(-5, 100, false);//The robot moves back from the cap for the turn.
-
-		spin(-130, 100, false);//It spins left towards the other cap.
-
-		move(-7, 127, false);//Now it moves towards the other cap.
+	move(-45, 127, false);
 
 		motor[fliperMotor] = 70;
 		motor[rightMotor] = 15;
 		motor[leftMotor] = 15;
-		wait1Msec(400);
-
-		//This is the parallel to flipping the cap in the last autonomous program.
+		wait1Msec(500);
 
 		motor[fliperMotor] = 0;
 		motor[rightMotor] = 0;
 		motor[leftMotor] = 0;
 
-		move(5, 100, false);//And it moves back from the flipped cap.
+		motor[servoLock] = 127;
 
-		motor[fliperMotor] = -50;//And lowers the arm to its original position.
+		spin( 100, 127, false);
 
-		wait1Msec(20);//Why does it take so long?
+		move( 16, 127, false);
 
-		motor[fliperMotor] = 0;
-		//raise(-5, 100, false);
-		//not used at the moment
-		//raiseWait();
+		spin( -60, 127, false);
 
-		//move(-5, 127, false);
-
-		//Seriously Bob, clean this code up or give me a good reason to keep it.
 		break;
 	}
 }
