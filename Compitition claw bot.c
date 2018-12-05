@@ -132,6 +132,9 @@ void pre_auton()
 	// Loop while center button is not pressed
 	while(nLCDButtons != centerButton)
 	{
+		if(vexRT[Btn7D] == 1)
+			break;
+
 		// Switch case that allows the user to choose from 4 different options
 		switch(count){
 		case 0:
@@ -230,17 +233,9 @@ task autonomous()
 		displayLCDCenteredString(0, "Red Flag");
 		displayLCDCenteredString(1, "Is Running");
 
-		motor[servoLock] = 127;//This drops the servo keeping the "claw" up at the beginning.
+		//motor[servoLock] = 127;//This drops the servo keeping the "claw" up at the beginning.
 
-		raise(12, 127, false);//This raises the lift to a sufficient height to hit the flag.
-
-		move(24, 100, false);//The robot moves forward as the lift is raising, which saves time.
-
-		spin(10, 100, false);//Then, approximately halfway to the flag,the robot turns to line up with the flag.
-
-		raiseWait();//The robot waits for the lift to finish raising before continuing.
-
-		move(18, 80, false);//With the lift now high enough, the robot again moves forward to hit the flag.
+		move(-42, 100, false);//The robot moves forward as the lift is raising, which saves time.
 
 		spin(15, 70, false);/*Here the robot spins to make sure the flag is scored, as the claw will push the flag sideways if it is not
 		scored yet*/
@@ -249,7 +244,7 @@ task autonomous()
 
 		move(-25, 100, false);//And it backs up from the flag.
 
-		spin(80, 70, false);/*Last, it spins to face towards the cap so that we can be as efficient as possible with the time allowed; by
+		spin(90, 70, false);/*Last, it spins to face towards the cap so that we can be as efficient as possible with the time allowed; by
 		turning now we do not need to use driver control time preparing for our next move, as we will be prepared already.*/
 		break;
 
@@ -309,7 +304,7 @@ task autonomous()
 		displayLCDCenteredString(0, "Red Caps");
 		displayLCDCenteredString(1, "Running");
 
-	move(-45, 127, false);
+		move(-45, 127, false);
 
 		motor[fliperMotor] = 70;
 		motor[rightMotor] = 15;
