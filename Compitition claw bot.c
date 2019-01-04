@@ -6,10 +6,10 @@
 #pragma config(Sensor, I2C_3,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_4,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_5,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
-#pragma config(Motor,  port2,           leftRear,      tmotorVex393_MC29, openLoop, encoderPort, I2C_5)
+#pragma config(Motor,  port2,           leftMotor,     tmotorVex393_MC29, PIDControl, encoderPort, I2C_4)
 #pragma config(Motor,  port3,           rightRear,     tmotorVex393_MC29, PIDControl, reversed, encoderPort, I2C_2)
 #pragma config(Motor,  port4,           servoLock,     tmotorServoStandard, openLoop)
-#pragma config(Motor,  port6,           leftMotor,     tmotorVex393_MC29, PIDControl, encoderPort, I2C_4)
+#pragma config(Motor,  port6,           leftRear,      tmotorVex393_MC29, PIDControl, encoderPort, I2C_5)
 #pragma config(Motor,  port7,           rightMotor,    tmotorVex393_MC29, PIDControl, reversed, encoderPort, I2C_3)
 #pragma config(Motor,  port8,           fliperMotor,   tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port9,           liftMotor,     tmotorVex393_MC29, PIDControl, reversed, encoderPort, I2C_1)
@@ -82,8 +82,8 @@ void spin(float deg, int speed, bool hold)	//used to turn the robot
 
 	setMotorTarget(rightMotor, -deg * ticksPerDeg, speed, hold);
 	setMotorTarget(leftMotor, deg * ticksPerDeg, speed, hold);
-	setMotorTarget(rightRear, 0, 0);
-	setMotorTarget(leftRear, 0, 0);
+	setMotorTarget(rightRear,  -deg * ticksPerDeg, speed, hold);
+	setMotorTarget(leftRear, deg * ticksPerDeg, speed, hold);
 
 	// due to the way the motor targets are set, a positive degree value will turn the robot clockwise, or right
 	// further, a negative value turns the robot counterclockwise, or left
@@ -296,6 +296,9 @@ task autonomous()
 
 		motor[fliperMotor] = 0;
 
+		spin(-90, 127, false);
+
+		motor[servoLock] = -127;
 
 		break;
 
