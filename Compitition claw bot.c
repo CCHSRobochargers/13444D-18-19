@@ -300,6 +300,14 @@ task autonomous()
 
 		motor[servoLock] = -127;
 
+		move(10, 127, false);
+
+		spin(-80, 127, false);
+
+		spin( 105, 127, false);
+
+		move( 40, 127, false);
+
 		break;
 
 	case 3:
