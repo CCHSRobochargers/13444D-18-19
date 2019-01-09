@@ -266,21 +266,30 @@ task autonomous()
 
 		motor[servoLock] = 127;//The servo allows the claw to drop.
 
-		raise(12, 127, false);//The lift raises to 12 inches to reach the flag.
+		move(-18, 127, false);
 
-		move(24, 100, false);//The robot moves forward as the lift is raising, maximizing efficiency.
+		motor[fliperMotor] = 70;
 
-		raiseWait();//Now the robot waits for the lift to finish raising.
+		wait1Msec(333);
 
-		move(15, 80, false);//It moves forward the remaining distance to hit the flag.
+		motor[fliperMotor] = 0;
 
-		spin(-30, 70, false);//Again, it spins to make sure the flag is scored.
+		spin(120, 127, false);
 
-		spin(30, 70, false);//And spins to back up straight again.
+		move(33, 127, false);
 
-		move(-25, 100, false);//It backs up from the flag.
+		move(-5, 127, false);
 
-		spin(-80, 70, false);//And again spins to face towards the cap to make the code as time-efficient as possible.
+		spin(-80, 127, false);
+
+		move(40, 127, false);
+
+		//move(8, 127, false);
+
+		//spin(-45, 127, false);
+
+		//move(36, 127, false);
+
 		break;
 
 	case 2: //This code is used to score two blue low caps.
@@ -298,7 +307,7 @@ task autonomous()
 
 		spin(-90, 127, false);
 
-		motor[servoLock] = -127;
+		motor[servoLock] = 127;
 
 		move(10, 127, false);
 
@@ -315,24 +324,26 @@ task autonomous()
 		displayLCDCenteredString(0, "Red Caps");
 		displayLCDCenteredString(1, "Running");
 
-		move(-45, 127, false);
+		move(-38, 127, false);
 
 		motor[fliperMotor] = 70;
-		motor[rightMotor] = 15;
-		motor[leftMotor] = 15;
-		wait1Msec(500);
+
+		wait1Msec(333);
 
 		motor[fliperMotor] = 0;
-		motor[rightMotor] = 0;
-		motor[leftMotor] = 0;
+
+		spin(90, 127, false);
 
 		motor[servoLock] = 127;
 
-		spin( 100, 127, false);
+		move(10, 127, false);
 
-		move( 16, 127, false);
+		spin(80, 127, false);
 
-		spin( -60, 127, false);
+		spin( -105, 127, false);
+
+		move( 40, 127, false);
+
 
 		break;
 	}
